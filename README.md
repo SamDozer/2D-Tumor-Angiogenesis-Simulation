@@ -18,7 +18,7 @@ I did this project under the supervision and help of Professor Rui Travasso and 
   - [4. Angiogenesis Model (Coimbra) New Initial Conditions, Diffusion + Proliferation.ipynb](#4-angiogenesis-model-coimbra-new-initial-conditions-diffusion--proliferationipynb)
   - [5. Final (Diffusion, Proliferation, and Irrigation).ipynb](#5-final-diffusion-proliferation-and-irrigationipynb)
 - [How to Run the Models](#how-to-run-the-models)
-- [License](#license)
+
 
 ---
 
