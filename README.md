@@ -1,11 +1,12 @@
 # **2D Tumor Angiogenesis Simulation**
 
-This repository contains a series of models simulating tumor angiogenesis, including tumor cell diffusion, proliferation, and nutrient irrigation via a vascular network. These models aim to study how tumors grow, spread, and receive nutrients from blood vessels, covering various levels of complexity—from simple diffusion models to advanced simulations incorporating dynamic blood vessel growth.
+This repository contains a series of 2D models simulating tumor angiogenesis, focusing on how tumor cells diffuse, proliferate, and interact with a vascular network for nutrient supply. The models are implemented on a 2D grid, using simplified mathematical representations of biological processes. While the models explore various levels of complexity—ranging from basic diffusion to dynamic blood vessel growth—they remain simplified approximations of real-life tumor behavior and do not aim to be fully 3D or exhaustive in biological realism.
 
-The models are implemented using Python and Jupyter Notebooks, employing the finite difference method to solve diffusion and proliferation equations. Blood vessel growth (irrigation) is also simulated, showing how vessels dynamically develop to supply the tumor with nutrients.
+The simulations are done using Python and Jupyter Notebooks, employing the finite difference method to solve the diffusion and proliferation equations that govern tumor growth. Additionally, blood vessel growth (irrigation) is modeled to simulate how vessels dynamically develop to supply nutrients to the tumor. These models serve as educational tools for understanding basic angiogenesis processes in a 2D framework.
 
-I did this project under the supervision and help of Professor Rui Travasso and Matilda Palmeira , I would like to thank them for their huge efforts with me to be able to complete this project in under a week, it was a part of  the Computational Biology summer school in Coimbra September-2024, it was my first python project ever, However I'm proud I was able to finish it to the end and presenting the work I hope its the start of more upcoming computational biology and maybe neuroscience projects in the future
 
+## Acknowledgments
+This project was completed under the supervision and guidance of Professor Rui Travasso and Matilda Palmeira. I am deeply grateful for their support and insights, which enabled me to complete this project in under a week. This work was part of the Computational Biology Summer School in Coimbra in September 2024, and it also marks my first Python project. I’m proud to present this work and look forward to exploring more projects in computational biology and neuroscience in the future.
 ---
 
 ## **Table of Contents**
@@ -26,11 +27,19 @@ I did this project under the supervision and help of Professor Rui Travasso and 
 
 Tumor angiogenesis is crucial for tumor expansion, as the process allows the tumor to grow beyond a size where diffusion alone can sustain it. This process involves inducing the growth of new blood vessels to supply nutrients and oxygen to the tumor. In this repository, we provide models that simulate this process starting with basic diffusion and adding more biological complexity, such as cell proliferation and dynamic blood vessel growth.
 
-Each notebook explores different aspects of tumor angiogenesis:
-- **Diffusion**: Tumor cells spread across space.
-- **Proliferation**: Cells multiply in response to environmental conditions.
-- **Irrigation**: Blood vessels grow to supply nutrients to the tumor.
+The main equations used in the model include:
 
+#Fisher-Kolmogorov Equation: Used to model tumor cell diffusion and proliferation. The equation combines diffusion, modeled with the Laplacian operator 
+(∇**2*2n), 
+and logistic growth for cell proliferation.
+Vessel Growth Equation: A separate equation that models the growth of blood vessels as a function of tumor cell density and vessel density. This equation regulates how the vascular network adapts to supply the growing tumor.
+Gaussian Initialization: Tumor cells are initially placed in Gaussian-shaped regions, simulating circular or irregular initial tumor shapes.
+Finite Difference Method: This method is used to discretize the spatial derivatives (Laplacian) and solve the partial differential equations (PDEs) governing the tumor's growth and the formation of the vascular network.
+Each notebook explores different aspects of tumor angiogenesis:
+
+Diffusion: Tumor cells spread across space due to concentration gradients.
+Proliferation: Tumor cells multiply based on local cell density and environmental conditions, following logistic growth.
+Irrigation: Blood vessels grow dynamically to supply the tumor with nutrients, represented by the vessel density equation.
 ---
 
 ## **Repository Contents**
