@@ -1,10 +1,8 @@
-# 2D-Tumor-Angiogenesis-Simulation
-2D tumor angiogenesis simulation using Python and Jupyter Notebooks. Models explore tumor cell diffusion, proliferation, and vascular irrigation. Includes multiple initial conditions, diffusion coefficients, and dynamic blood vessel growth for realistic tumor simulation.
+# **2D Tumor Angiogenesis Simulation**
 
+This repository contains a series of models simulating tumor angiogenesis, including tumor cell diffusion, proliferation, and nutrient irrigation via a vascular network. These models aim to study how tumors grow, spread, and receive nutrients from blood vessels, covering various levels of complexity—from simple diffusion models to advanced simulations incorporating dynamic blood vessel growth.
 
-This repository contains a series of models simulating tumor angiogenesis, diffusion, proliferation, and interactions with a vascular network (irrigation). These models are designed to study how tumor cells grow, spread, and receive nutrients from blood vessels, and they vary in their complexity, from basic diffusion models to advanced models incorporating dynamic vascular growth.
-
-The models are implemented in Python, using the finite difference method to solve the diffusion and proliferation equations governing tumor growth. They also model how blood vessels grow in response to the tumor's nutrient demands.
+The models are implemented using Python and Jupyter Notebooks, employing the finite difference method to solve diffusion and proliferation equations. Blood vessel growth (irrigation) is also simulated, showing how vessels dynamically develop to supply the tumor with nutrients.
 
 ---
 
@@ -24,12 +22,12 @@ The models are implemented in Python, using the finite difference method to solv
 
 ## **Overview**
 
-Tumor angiogenesis is the process by which a tumor induces the growth of new blood vessels to supply itself with nutrients and oxygen. This process is critical for tumor expansion, as it allows the tumor to grow beyond the size at which simple diffusion can support it. In this repository, several models simulate this process, starting with simple diffusion models and progressively adding more biological detail, such as cell proliferation and blood vessel growth.
+Tumor angiogenesis is crucial for tumor expansion, as the process allows the tumor to grow beyond a size where diffusion alone can sustain it. This process involves inducing the growth of new blood vessels to supply nutrients and oxygen to the tumor. In this repository, we provide models that simulate this process starting with basic diffusion and adding more biological complexity, such as cell proliferation and dynamic blood vessel growth.
 
-Each notebook explores a different aspect of tumor angiogenesis:
-- **Diffusion**: The spread of tumor cells across space.
-- **Proliferation**: The multiplication of tumor cells in response to environmental conditions.
-- **Irrigation**: The growth of blood vessels that supply nutrients to the tumor.
+Each notebook explores different aspects of tumor angiogenesis:
+- **Diffusion**: Tumor cells spread across space.
+- **Proliferation**: Cells multiply in response to environmental conditions.
+- **Irrigation**: Blood vessels grow to supply nutrients to the tumor.
 
 ---
 
@@ -38,81 +36,81 @@ Each notebook explores a different aspect of tumor angiogenesis:
 ### 1. **Angiogenesis Model (Coimbra).ipynb**
 
 **Description**:
-- This is the simplest angiogenesis model. It simulates tumor cell diffusion starting from a smooth, circular region. The model uses a Gaussian distribution to initialize the tumor and simulates how tumor cells spread symmetrically from the center.
-  
+This is the simplest model in the series, simulating tumor cell diffusion from a smooth, circular region using a Gaussian distribution. The model illustrates how tumor cells spread symmetrically from the center.
+
 **Key Features**:
-- **Initial Condition**: The tumor starts as a smooth, circular region.
-- **Processes Modeled**: Diffusion of tumor cells across a 100x100 grid.
-- **Main Parameters**:
+- **Initial Condition**: Smooth, circular tumor region.
+- **Processes Modeled**: Tumor cell diffusion across a 100x100 grid.
+- **Parameters**:
   - \( D = 1 \): Diffusion coefficient.
-  - \( A = 0.1 \): Maximum cell number.
+  - \( A = 0.1 \): Maximum cell density.
   - \( \sigma = 10 \): Tumor width.
-- **Visualization**: The tumor growth is visualized at each time step, showing a symmetric diffusion pattern.
+- **Visualization**: Symmetric diffusion of the tumor is visualized in real-time during the simulation.
 
 ---
 
 ### 2. **Angiogenesis Model (Coimbra) New Initial Conditions and Diffusion.ipynb**
 
 **Description**:
-- This model simulates the diffusion of tumor cells starting from **three distinct regions**, initialized using separate Gaussian distributions. The model is more complex than the previous one, as it simulates an irregular, multi-region tumor.
+This model simulates diffusion starting from three distinct tumor regions, initialized using separate Gaussian distributions. This model represents a more complex and realistic tumor growth pattern.
 
 **Key Features**:
-- **Initial Condition**: The tumor consists of three separate regions with different widths and locations.
+- **Initial Condition**: Three distinct regions with different widths and locations.
 - **Processes Modeled**: Diffusion of tumor cells across a 200x200 grid.
-- **Main Parameters**:
-  - \( D = 2 \): Higher diffusion coefficient, resulting in faster spread.
-  - \( \sigma_1, \sigma_2, \sigma_3 \): Widths of the three tumor regions.
-  - \( A = 0.05 \): Maximum cell number.
-- **Visualization**: The tumor growth is visualized at multiple time steps (100, 480, 860, etc.), showing the interaction and diffusion of tumor regions over time.
+- **Parameters**:
+  - \( D = 2 \): Higher diffusion rate for faster spread.
+  - \( \sigma_1, \sigma_2, \sigma_3 \): Widths of the tumor regions.
+  - \( A = 0.05 \): Maximum cell density.
+- **Visualization**: Tumor growth is visualized at multiple time steps (100, 480, 860, etc.), showing how the tumor regions interact and spread over time.
 
 ---
 
 ### 3. **Angiogenesis Model (Coimbra) New Initial Conditions for Proliferation and Small D.ipynb**
 
 **Description**:
-- This model introduces **cell proliferation** in addition to diffusion. The diffusion coefficient is small, simulating slow cell movement, but tumor cells proliferate actively based on a logistic growth model.
+This model introduces **cell proliferation** alongside diffusion, simulating slower cell movement with active cell growth. Tumor cells grow according to a logistic model, but their movement is restricted due to a small diffusion coefficient.
 
 **Key Features**:
 - **Initial Condition**: Three irregular tumor regions.
 - **Processes Modeled**: Slow diffusion and cell proliferation.
-- **Main Parameters**:
-  - \( D1 = 0.001 \): Small diffusion coefficient for limited cell movement.
+- **Parameters**:
+  - \( D1 = 0.001 \): Limited diffusion rate.
   - \( \alpha_0 = 2 \): Proliferation rate.
   - \( N_{\text{Max}} = 1 \): Maximum cell carrying capacity.
-- **Visualization**: Tumor regions proliferate and slowly diffuse, visualized at selected time steps (100, 480, 860, etc.).
+- **Visualization**: Tumor regions proliferate and diffuse slowly, with snapshots at time steps (100, 480, 860, etc.).
 
 ---
 
 ### 4. **Angiogenesis Model (Coimbra) New Initial Conditions, Diffusion + Proliferation.ipynb**
 
 **Description**:
-- This model balances both **diffusion** and **proliferation**. Cells spread through diffusion while also multiplying through proliferation. The initial tumor shape is the same as in previous models, with three distinct regions.
+This model balances both **diffusion** and **proliferation**. Cells spread moderately through diffusion while actively multiplying through proliferation. The tumor grows from three distinct regions.
 
 **Key Features**:
-- **Initial Condition**: Three irregular tumor regions.
+- **Initial Condition**: Three tumor regions.
 - **Processes Modeled**: Moderate diffusion and cell proliferation.
-- **Main Parameters**:
+- **Parameters**:
   - \( D = 0.05 \): Moderate diffusion coefficient.
   - \( \alpha_0 = 1 \): Proliferation rate.
   - \( N_{\text{Max}} = 1 \): Maximum cell carrying capacity.
-- **Visualization**: Tumor growth is visualized at various time steps (100, 200, 300, ..., 999), showing the interaction between diffusion and proliferation.
+- **Visualization**: Tumor growth is visualized at various time steps (100, 200, 300, ..., 999), showing how diffusion and proliferation interact.
 
 ---
 
 ### 5. **Final (Diffusion, Proliferation, and Irrigation).ipynb**
 
 **Description**:
-- This is the most advanced model, incorporating **diffusion**, **proliferation**, and a **vascular network** (irrigation) that supplies nutrients to the tumor. The model simulates how blood vessels grow in response to the tumor's demand for nutrients, supporting the tumor's expansion.
+This is the most comprehensive model, incorporating **diffusion**, **proliferation**, and a **vascular network** to supply nutrients to the growing tumor. The model dynamically simulates blood vessel growth in response to the tumor's nutrient demands.
 
 **Key Features**:
-- **Initial Condition**: Three irregular tumor regions and a uniform vascular network.
+- **Initial Condition**: Three tumor regions and a uniform vascular network.
 - **Processes Modeled**: Diffusion, proliferation, and irrigation (blood vessel growth).
-- **Main Parameters**:
+- **Parameters**:
   - \( D = 0.2 \): Diffusion coefficient.
   - \( \alpha_0 = 1 \), \( \alpha_1 = 1 \), \( \Gamma = 0.5 \): Proliferation parameters.
   - \( V_{\text{Max}} = 4 \): Maximum vessel density.
-  - **Beta Matrix**: Controls vascular growth rate in different regions.
-- **Visualization**: Both the tumor and the vessel network are visualized at selected time steps (100, 200, 300, ..., 999), showing the interaction between the growing tumor and the vascular system.
+  - **Beta Matrix**: Controls vascular growth rate.
+- **Visualization**: Both the tumor and vascular network are visualized at multiple time steps, showing interactions between the tumor and its blood supply.
 
 ---
 
@@ -126,26 +124,26 @@ Each notebook explores a different aspect of tumor angiogenesis:
 
 ### Instructions:
 
-1. Clone the repository to your local machine:
+1. Clone the repository:
     ```bash
     git clone https://github.com/your-username/tumor-angiogenesis-simulation.git
     ```
-2. Navigate to the repository folder:
+2. Navigate to the repository:
     ```bash
     cd tumor-angiogenesis-simulation
     ```
-3. Open the Jupyter Notebook:
+3. Open Jupyter Notebook:
     ```bash
     jupyter notebook
     ```
-4. Run any of the provided notebooks to explore different tumor growth simulations.
+4. Run the desired notebook to visualize tumor growth.
 
 ---
 
 ## **License**
 
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ---
 
-This README provides a detailed overview of the project, descriptions of each file, and instructions for running the simulations. Let me know if you need any further modifications or clarifications!
+These improvements focus on clarity, conciseness, and ensuring readers understand the purpose and complexity of each model. Let me know if you need further adjustments!
