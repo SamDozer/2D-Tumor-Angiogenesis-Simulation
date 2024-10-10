@@ -4,6 +4,8 @@ This repository contains a series of models simulating tumor angiogenesis, inclu
 
 The models are implemented using Python and Jupyter Notebooks, employing the finite difference method to solve diffusion and proliferation equations. Blood vessel growth (irrigation) is also simulated, showing how vessels dynamically develop to supply the tumor with nutrients.
 
+I did this project under the supervision and help of Professor Rui Travasso and Matilda Palmeira , I would like to thank them for their huge efforts with me to be able to complete this project in under a week it was a part of Computational biology summer school in Coimbra, it was my first python project ever, However I'm proud I was able to finish it to the end and presenting the work I hope its the start of more upcoming computational biology and maybe neuroscience projects in the future
+
 ---
 
 ## **Table of Contents**
