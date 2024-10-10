@@ -1,13 +1,6 @@
 # 2D-Tumor-Angiogenesis-Simulation
 2D tumor angiogenesis simulation using Python and Jupyter Notebooks. Models explore tumor cell diffusion, proliferation, and vascular irrigation. Includes multiple initial conditions, diffusion coefficients, and dynamic blood vessel growth for realistic tumor simulation.
 
-Overview
-Tumor angiogenesis is the process by which a tumor induces the growth of new blood vessels to supply itself with nutrients and oxygen. This process is critical for tumor expansion, as it allows the tumor to grow beyond the size at which simple diffusion can support it. In this repository, several models simulate this process, starting with simple diffusion models and progressively adding more biological detail, such as cell proliferation and blood vessel growth.
-Here is the long, detailed **README** file you can use for your GitHub repository:
-
----
-
-# **Tumor Angiogenesis Simulation Models**
 
 This repository contains a series of models simulating tumor angiogenesis, diffusion, proliferation, and interactions with a vascular network (irrigation). These models are designed to study how tumor cells grow, spread, and receive nutrients from blood vessels, and they vary in their complexity, from basic diffusion models to advanced models incorporating dynamic vascular growth.
 
