@@ -145,5 +145,3 @@ This is the most comprehensive model, incorporating **diffusion**, **proliferati
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ---
-
-These improvements focus on clarity, conciseness, and ensuring readers understand the purpose and complexity of each model. Let me know if you need further adjustments!
