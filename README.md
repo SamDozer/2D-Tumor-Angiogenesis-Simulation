@@ -25,23 +25,16 @@ This This project was completed under the supervision and guidance of Professor 
 
 ---
 
-## **Overview**
-
-Tumor angiogenesis is crucial for tumor expansion, as the process allows the tumor to grow beyond a size where diffusion alone can sustain it. This process involves inducing the growth of new blood vessels to supply nutrients and oxygen to the tumor. In this repository, we provide models that simulate this process starting with basic diffusion and adding more biological complexity, such as cell proliferation and dynamic blood vessel growth.
-
 The main equations used in the model include:
+- **Fisher-Kolmogorov Equation**: Used to model tumor cell **diffusion** and **proliferation**. The equation combines diffusion, modeled with the Laplacian operator (\( \nabla^2 n \)), and logistic growth for cell proliferation.
+- **Vessel Growth Equation**: A separate equation that models the growth of blood vessels as a function of tumor cell density and vessel density. This equation regulates how the vascular network adapts to supply the growing tumor.
+- **Gaussian Initialization**: Tumor cells are initially placed in Gaussian-shaped regions, simulating circular or irregular initial tumor shapes.
+- **Finite Difference Method**: This method is used to discretize the spatial derivatives (Laplacian) and solve the partial differential equations (PDEs) governing the tumor's growth and the formation of the vascular network.
 
-#Fisher-Kolmogorov Equation: Used to model tumor cell diffusion and proliferation. The equation combines diffusion, modeled with the Laplacian operator 
-(∇**2*2n), 
-and logistic growth for cell proliferation.
-Vessel Growth Equation: A separate equation that models the growth of blood vessels as a function of tumor cell density and vessel density. This equation regulates how the vascular network adapts to supply the growing tumor.
-Gaussian Initialization: Tumor cells are initially placed in Gaussian-shaped regions, simulating circular or irregular initial tumor shapes.
-Finite Difference Method: This method is used to discretize the spatial derivatives (Laplacian) and solve the partial differential equations (PDEs) governing the tumor's growth and the formation of the vascular network.
 Each notebook explores different aspects of tumor angiogenesis:
-
-Diffusion: Tumor cells spread across space due to concentration gradients.
-Proliferation: Tumor cells multiply based on local cell density and environmental conditions, following logistic growth.
-Irrigation: Blood vessels grow dynamically to supply the tumor with nutrients, represented by the vessel density equation.
+- **Diffusion**: Tumor cells spread across space due to concentration gradients.
+- **Proliferation**: Tumor cells multiply based on local cell density and environmental conditions, following logistic growth.
+- **Irrigation**: Blood vessels grow dynamically to supply the tumor with nutrients, represented by the vessel density equation.
 ---
 
 ## **Repository Contents**
