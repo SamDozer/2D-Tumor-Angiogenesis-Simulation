@@ -7,7 +7,7 @@ The simulations are done using Python and Jupyter Notebooks, employing the finit
 
 # Acknowledgments
 
-This This project was completed under the guidance of Professor Rui Travasso and Matilda Palmeira. I am deeply grateful for their support and insights, which enabled me to complete this project in under a week. This work was part of the Computational Biology Summer School in Coimbra in September 2024, and it also marks my first Python project. I’m proud to present this work and look forward to exploring more projects in computational biology and neuroscience in the future.
+This project was completed under the guidance of Professor Rui Travasso and Matilda Palmeira. I am deeply grateful for their support and insights, which enabled me to complete this project in under a week. This work was part of the Computational Biology Summer School in Coimbra in September 2024, and it also marks my first Python project. I’m proud to present this work and look forward to exploring more projects in computational biology and neuroscience in the future.
 
 ---
 
