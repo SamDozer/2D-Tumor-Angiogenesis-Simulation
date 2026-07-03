@@ -25,7 +25,7 @@ The simulations are done using Python and Jupyter Notebooks, employing the finit
 Tumor angiogenesis is crucial for tumor expansion, as the process allows the tumor to grow beyond a size where diffusion alone can sustain it. This process involves inducing the growth of new blood vessels to supply nutrients and oxygen to the tumor. In this repository, we provide models that simulate this process starting with basic diffusion and adding more biological complexity, such as cell proliferation and dynamic blood vessel growth.
 
 The main equations used in the model include:
-- **Fisher-Kolmogorov Equation**: Used to model tumor cell **diffusion** and **proliferation**. The equation combines diffusion, modeled with the Laplacian operator (\( \nabla^2 n \)), and logistic growth for cell proliferation.
+- **Fisher-Kolmogorov Equation**: Used to model tumor cell **diffusion** and **proliferation**. The equation combines diffusion, modeled with the Laplacian operator ($\nabla^2 n$), and logistic growth for cell proliferation.
 - **Vessel Growth Equation**: A separate equation that models the growth of blood vessels as a function of tumor cell density and vessel density. This equation regulates how the vascular network adapts to supply the growing tumor.
 - **Gaussian Initialization**: Tumor cells are initially placed in Gaussian-shaped regions, simulating circular or irregular initial tumor shapes.
 - **Finite Difference Method**: This method is used to discretize the spatial derivatives (Laplacian) and solve the partial differential equations (PDEs) governing the tumor's growth and the formation of the vascular network.
@@ -48,9 +48,9 @@ This is the simplest model in the series, simulating tumor cell diffusion from a
 - **Initial Condition**: Smooth, circular tumor region.
 - **Processes Modeled**: Tumor cell diffusion across a 100x100 grid.
 - **Parameters**:
-  - \( D = 1 \): Diffusion coefficient.
-  - \( A = 0.1 \): Maximum cell density.
-  - \( \sigma = 10 \): Tumor width.
+  - $D = 1$: Diffusion coefficient.
+  - $A = 0.1$: Maximum cell density.
+  - $\sigma = 10$: Tumor width.
 - **Visualization**: Symmetric diffusion of the tumor is visualized in real-time during the simulation.
 
 ---
@@ -64,9 +64,9 @@ This model simulates diffusion starting from three distinct tumor regions, initi
 - **Initial Condition**: Three distinct regions with different widths and locations.
 - **Processes Modeled**: Diffusion of tumor cells across a 200x200 grid.
 - **Parameters**:
-  - \( D = 2 \): Higher diffusion rate for faster spread.
-  - \( \sigma_1, \sigma_2, \sigma_3 \): Widths of the tumor regions.
-  - \( A = 0.05 \): Maximum cell density.
+  - $D = 2$: Higher diffusion rate for faster spread.
+  - $\sigma_1, \sigma_2, \sigma_3$: Widths of the tumor regions.
+  - $A = 0.05$: Maximum cell density.
 - **Visualization**: Tumor growth is visualized at multiple time steps (100, 480, 860, etc.), showing how the tumor regions interact and spread over time.
 
 ---
@@ -80,9 +80,9 @@ This model introduces **cell proliferation** alongside diffusion, simulating slo
 - **Initial Condition**: Three irregular tumor regions.
 - **Processes Modeled**: Slow diffusion and cell proliferation.
 - **Parameters**:
-  - \( D1 = 0.001 \): Limited diffusion rate.
-  - \( \alpha_0 = 2 \): Proliferation rate.
-  - \( N_{\text{Max}} = 1 \): Maximum cell carrying capacity.
+  - $D_1 = 0.001$: Limited diffusion rate.
+  - $\alpha_0 = 2$: Proliferation rate.
+  - $N_{\text{Max}} = 1$: Maximum cell carrying capacity.
 - **Visualization**: Tumor regions proliferate and diffuse slowly, with snapshots at time steps (100, 480, 860, etc.).
 
 ---
@@ -96,9 +96,9 @@ This model balances both **diffusion** and **proliferation**. Cells spread moder
 - **Initial Condition**: Three tumor regions.
 - **Processes Modeled**: Moderate diffusion and cell proliferation.
 - **Parameters**:
-  - \( D = 0.05 \): Moderate diffusion coefficient.
-  - \( \alpha_0 = 1 \): Proliferation rate.
-  - \( N_{\text{Max}} = 1 \): Maximum cell carrying capacity.
+  - $D = 0.05$: Moderate diffusion coefficient.
+  - $\alpha_0 = 1$: Proliferation rate.
+  - $N_{\text{Max}} = 1$: Maximum cell carrying capacity.
 - **Visualization**: Tumor growth is visualized at various time steps (100, 200, 300, ..., 999), showing how diffusion and proliferation interact.
 
 ---
@@ -112,9 +112,9 @@ This is the most comprehensive model, incorporating **diffusion**, **proliferati
 - **Initial Condition**: Three tumor regions and a uniform vascular network.
 - **Processes Modeled**: Diffusion, proliferation, and irrigation (blood vessel growth).
 - **Parameters**:
-  - \( D = 0.2 \): Diffusion coefficient.
-  - \( \alpha_0 = 1 \), \( \alpha_1 = 1 \), \( \Gamma = 0.5 \): Proliferation parameters.
-  - \( V_{\text{Max}} = 4 \): Maximum vessel density.
+  - $D = 0.2$: Diffusion coefficient.
+  - $\alpha_0 = 1$, $\alpha_1 = 1$, $\Gamma = 0.5$: Proliferation parameters.
+  - $V_{\text{Max}} = 4$: Maximum vessel density.
   - **Beta Matrix**: Controls vascular growth rate.
 - **Visualization**: Both the tumor and vascular network are visualized at multiple time steps, showing interactions between the tumor and its blood supply.
 
@@ -130,5 +130,5 @@ This is the most comprehensive model, incorporating **diffusion**, **proliferati
 
 # Acknowledgments
 
-This project was completed under the guidance of Professor Rui Travasso and Matilda Palmeira. I am deeply grateful for their support and insights, which enabled me to complete this project in under a week. This work was part of the Computational Biology Summer School in Coimbra in September 2024, and it also marks my first Python project. I’m proud to present this work and look forward to exploring more projects in computational biology and neuroscience in the future.
+This project was completed under the guidance of Professor Rui Travasso and Matilda Palmeira. I am deeply grateful for their support and insights, which enabled me to complete this project in under a week. This work was part of the Computational Biology Summer School in Coimbra in September 2024, and it also marks my first Python project. I'm proud to present this work and look forward to exploring more projects in computational biology and neuroscience in the future.
 
