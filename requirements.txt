@@ -1,0 +1,6 @@
+# 2D Tumor Angiogenesis Simulation — Python dependencies
+# Install with:  pip install -r requirements.txt
+
+numpy
+matplotlib
+jupyter
