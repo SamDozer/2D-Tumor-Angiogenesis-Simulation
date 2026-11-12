@@ -14,14 +14,17 @@ FRAME = {
     "05-diffusion-proliferation-irrigation": -1,  # final vessel-density field
 }
 
-# (notebook folder, output folder, use FRAME?) - corrected notebooks draw a
-# single summary figure, so their last image is always the one to export.
+# (notebook folder, output folder, mode)
+#   "frame": one image, chosen by FRAME (originals)
+#   "last":  the last image (corrected notebooks draw one summary figure)
+#   "all":   every image, saved as <stem>-1.png, <stem>-2.png, ... (extensions)
 SOURCES = [
-    ("notebooks", "docs/results", True),
-    ("notebooks/corrected", "docs/results/corrected", False),
+    ("notebooks", "docs/results", "frame"),
+    ("notebooks/corrected", "docs/results/corrected", "last"),
+    ("notebooks/extended", "docs/results/extended", "all"),
 ]
 
-for src, dest, use_frame in SOURCES:
+for src, dest, mode in SOURCES:
     os.makedirs(dest, exist_ok=True)
     for nb in sorted(glob.glob(f"{src}/*.ipynb")):
         stem = os.path.splitext(os.path.basename(nb))[0]
@@ -35,7 +38,13 @@ for src, dest, use_frame in SOURCES:
                     pngs.append("".join(img) if isinstance(img, list) else img)
         if not pngs:
             print(f"{stem}: no images, skipped"); continue
-        idx = FRAME.get(stem, -1) if use_frame else -1
+        if mode == "all":
+            for k, png in enumerate(pngs, start=1):
+                with open(f"{dest}/{stem}-{k}.png", "wb") as g:
+                    g.write(base64.b64decode(png))
+            print(f"{src}/{stem}: {len(pngs)} frames -> {dest}/{stem}-1..{len(pngs)}.png")
+            continue
+        idx = FRAME.get(stem, -1) if mode == "frame" else -1
         with open(f"{dest}/{stem}.png", "wb") as g:
             g.write(base64.b64decode(pngs[idx]))
         print(f"{src}/{stem}: {len(pngs)} frames -> {dest}/{stem}.png (frame {idx})")

@@ -23,6 +23,7 @@ The simulations use Python and Jupyter Notebooks, employing the finite differenc
 - [The Models](#the-models)
 - [Corrected Versions](#corrected-versions)
 - [Known Issues in the Original Notebooks](#known-issues-in-the-original-notebooks)
+- [Extension: Vessels Set the Carrying Capacity](#extension-vessels-set-the-carrying-capacity)
 - [Installation](#installation)
 - [How to Run](#how-to-run)
 - [Acknowledgments](#acknowledgments)
@@ -63,13 +64,15 @@ Each notebook explores a different aspect of tumor angiogenesis:
 │   ├── 03-proliferation-small-diffusion.ipynb
 │   ├── 04-diffusion-proliferation.ipynb
 │   ├── 05-diffusion-proliferation-irrigation.ipynb
-│   └── corrected/                      # corrected, vectorized versions (same file names)
+│   ├── corrected/                      # corrected, vectorized versions (same file names)
+│   └── extended/                       # new models that go beyond the summer-school work
 ├── scripts/
 │   └── extract_results.py              # regenerates the gallery images from notebook outputs
 └── docs/
     ├── notes.docx                      # working notes
     ├── results/                        # exported figures used in the gallery below
-    │   └── corrected/                  # figures from the corrected notebooks
+    │   ├── corrected/                  # figures from the corrected notebooks
+    │   └── extended/                   # figures from the extension notebooks
     ├── derivations/                    # handwritten model derivations
     │   └── raw/                        # original unedited photos
     ├── planning/                       # code-structure planning sketch
@@ -231,7 +234,7 @@ What the corrected models show:
 
 - **With the growth term fixed, tumours saturate fast.** In model 3 the tumour reaches $N_{\max}$ within about 100 steps; in the original its peak density only rose from 0.10 to 0.14 over 2000 steps.
 - **Models 3 and 4 are under-resolved.** The tumour edge is about $\sqrt{D/\alpha_0}$ wide: 0.02 grid cells in model 3 and 0.2 in model 4. When the edge is thinner than a grid cell, how fast the tumour spreads depends on the grid, so use a finer grid for quantitative results.
-- **In model 5 the vessels barely affect the tumour.** Re-running with $\beta = 0$ changes the tumour area by less than 0.1 %. The front is pushed by the sparse cells at its leading edge, where no vessels have formed yet, while behind the front the tumour is already at $N_{\max}$, so a higher growth rate has nothing to act on. For the vasculature to matter, it has to act ahead of the front or limit the tumour, for example through a carrying capacity that depends on $V$.
+- **In model 5 the vessels barely affect the tumour.** Re-running with $\beta = 0$ changes the tumour area by less than 0.1 %. The front is pushed by the sparse cells at its leading edge, where no vessels have formed yet, while behind the front the tumour is already at $N_{\max}$, so a higher growth rate has nothing to act on. For the vasculature to matter, it has to act ahead of the front or limit the tumour, for example through a carrying capacity that depends on $V$. The [extension below](#extension-vessels-set-the-carrying-capacity) does exactly that.
 
 ---
 
@@ -248,6 +251,36 @@ What the corrected models show:
 | 02–05 | All save figures as `matrix_step_{time}.png` in the working folder | Notebooks overwrite each other's images (these files are git-ignored) |
 
 The diagnosis was checked by re-implementing notebook 03's update line: it reproduces every maximum density the notebook printed, from 0.0991 to 0.1384.
+
+---
+
+## Extension: Vessels Set the Carrying Capacity
+
+[`notebooks/extended/06-vessel-dependent-carrying-capacity.ipynb`](notebooks/extended/06-vessel-dependent-carrying-capacity.ipynb) makes the vasculature matter. Vessels supply a nutrient (e.g. oxygen) that diffuses into the tissue and is consumed by tumour cells, and the local nutrient level sets the carrying capacity. Vessels grow where tumour cells are hypoxic:
+
+$$\frac{\partial c}{\partial t} = D_c\,\nabla^2 c + s\,V\,(1 - c) - \lambda\, n\, c$$
+
+$$\frac{\partial n}{\partial t} = D\,\nabla^2 n + \alpha_0\, n\,\frac{N_{\max}\,c - n}{N_{\max}}$$
+
+$$\frac{\partial V}{\partial t} = \beta(x)\, n\,(1 - c)\left(1 - \frac{V}{V_{\max}}\right)$$
+
+The mechanism follows Rui Travasso's work. In the multiscale model of Jafari Nivlouei, Soltani, Carvalho, Travasso, Salimpour & Shirani (2021, [doi:10.1371/journal.pcbi.1009081](https://doi.org/10.1371/journal.pcbi.1009081)):
+- vessels release nutrients that diffuse into the tissue and are consumed by the cells;
+- nutrient-starved cells become hypoxic, stop proliferating and form a necrotic core;
+- hypoxic cells secrete VEGF, which recruits new vessels.
+
+In Travasso et al. (2011, [doi:10.1371/journal.pone.0019989](https://doi.org/10.1371/journal.pone.0019989)), hypoxic cells release angiogenic factor until oxygen reaches them. Those are cell-based and phase-field models; the continuum equations above are a simplification of that mechanism, not equations from the papers.
+
+**Result.** Angiogenesis is blocked on the left half ($\beta = 0$) and active on the right ($\beta = 0.5$).
+- Once the tumour outgrows the nutrient's reach, its core becomes hypoxic and dies back.
+- Where vessels form, the tumour settles at a mean density of **0.45**, against **0.27** where angiogenesis is blocked and in a control run with no angiogenesis anywhere.
+
+| Tumour (top), nutrient = carrying capacity (middle), vessels (bottom) |
+|:--:|
+| ![Vessel-dependent carrying capacity](docs/results/extended/06-vessel-dependent-carrying-capacity-1.png) |
+| ![Tumour density with and without angiogenesis](docs/results/extended/06-vessel-dependent-carrying-capacity-2.png) |
+
+Parameters are in grid units and chosen for illustration, not calibrated to tissue.
 
 ---
 
