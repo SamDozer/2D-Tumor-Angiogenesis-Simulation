@@ -75,6 +75,7 @@ Each notebook explores a different aspect of tumor angiogenesis:
     │   └── extended/                   # figures from the extension notebooks
     ├── derivations/                    # handwritten model derivations
     │   └── raw/                        # original unedited photos
+    ├── course-notes/                   # summer-school lecture notes (7 pages, second notepad)
     ├── planning/                       # code-structure planning sketch
     └── presentation/                   # summer-school project slides
 ```
@@ -156,6 +157,15 @@ These are photos of the notebook I worked from during the summer school, include
 
 - Planning sketch: [`docs/planning/code-structure.jpg`](docs/planning/code-structure.jpg)
 - Original unedited photos: [`docs/derivations/raw/`](docs/derivations/raw/)
+
+**Course notes** ([`docs/course-notes/`](docs/course-notes/)) are lecture notes from the summer school, in reading order:
+
+| | |
+|:--:|:--:|
+| <img src="docs/course-notes/01-day2-tumour-phases-and-taxis.jpg" width="300"><br>1 · Day 2: tumour phases, chemotaxis, haptotaxis, durotaxis | <img src="docs/course-notes/02-grid-and-gaussian-initial-condition.jpg" width="300"><br>2 · Grid and Gaussian initial condition |
+| <img src="docs/course-notes/03-diffusion-and-fisher-kolmogorov.jpg" width="300"><br>3 · Diffusion and Fisher–Kolmogorov | <img src="docs/course-notes/04-finite-difference-update.jpg" width="300"><br>4 · Finite-difference update |
+| <img src="docs/course-notes/05-laplacian-explanation.jpg" width="300"><br>5 · What the discrete Laplacian does | <img src="docs/course-notes/06-model-overview-and-parameters.jpg" width="300"><br>6 · Overview of models 1–4 and their parameters |
+| <img src="docs/course-notes/07-vessel-model-and-gamma.jpg" width="300"><br>7 · Vessel model, β split and the meaning of γ | |
 
 </details>
 
