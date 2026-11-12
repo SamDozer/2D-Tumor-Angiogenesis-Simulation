@@ -3,6 +3,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
 ![Made with Jupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange.svg)
+[![tests](https://github.com/SamDozer/2D-Tumor-Angiogenesis-Simulation/actions/workflows/tests.yml/badge.svg)](https://github.com/SamDozer/2D-Tumor-Angiogenesis-Simulation/actions/workflows/tests.yml)
 
 > A series of 2D models simulating tumor angiogenesis — how tumor cells diffuse,
 > proliferate, and recruit a vascular network for nutrient supply — implemented in
@@ -25,8 +26,11 @@ The simulations use Python and Jupyter Notebooks, employing the finite differenc
 - [Corrected Versions](#corrected-versions)
 - [Known Issues in the Original Notebooks](#known-issues-in-the-original-notebooks)
 - [Extension: Vessels Set the Carrying Capacity](#extension-vessels-set-the-carrying-capacity)
+- [Analyses: Gamma, Grid, Units and Edges](#analyses-gamma-grid-units-and-edges)
 - [Installation](#installation)
 - [How to Run](#how-to-run)
+- [Tests](#tests)
+- [Citation](#citation)
 - [Acknowledgments](#acknowledgments)
 - [License](#license)
 
@@ -39,7 +43,9 @@ The repository is split into two folders so the original work and the later addi
 | Folder | What it is |
 |---|---|
 | [`original/`](original/) | **My summer-school work** (Coimbra, September 2024): the five notebooks, their output figures, my handwritten derivations, course notes, planning sketch and project slides. **Kept unchanged.** |
-| [`corrected/`](corrected/) | **Added later (2026) with the help of Claude, an AI assistant:** corrected versions of the five notebooks, a new extension model (notebook 06), their figures and the gallery script. |
+| [`corrected/`](corrected/) | **Added later (2026) with the help of Claude, an AI assistant:** corrected versions of the five notebooks, a new extension model (06), four analysis notebooks (07–10), shared code with tests, figures and the gallery script. |
+
+The repository-level files (`README.md`, `LICENSE`, `CITATION.cff`, `requirements.txt`, `.gitignore`, `.github/`) were also added in 2026. One file in `original/` was too: `original/presentation/CBSS8-project.pdf` is a PDF export of the slides, made so GitHub can display them. The `.pptx` beside it is the original.
 
 ---
 
@@ -68,8 +74,10 @@ Each notebook explores a different aspect of tumor angiogenesis:
 2D-Tumor-Angiogenesis-Simulation/
 ├── README.md
 ├── LICENSE
+├── CITATION.cff                            # how to cite this work
 ├── requirements.txt
 ├── .gitignore
+├── .github/workflows/tests.yml             # runs the tests on every push
 ├── original/                               # MY SUMMER-SCHOOL WORK (Sept 2024), unchanged
 │   ├── notebooks/                          # the five original models
 │   │   ├── 01-diffusion-single-region.ipynb
@@ -82,13 +90,21 @@ Each notebook explores a different aspect of tumor angiogenesis:
 │   │   └── raw/                            # original unedited photos
 │   ├── course-notes/                       # summer-school lecture notes (7 pages)
 │   ├── planning/                           # code-structure planning sketch
-│   ├── presentation/                       # project slides
+│   ├── presentation/                       # project slides (.pptx, plus a 2026 PDF export)
 │   └── notes.docx                          # working notes
 └── corrected/                              # ADDED LATER (2026) WITH CLAUDE
+    ├── angiogenesis.py                     # shared code imported by the notebooks
     ├── notebooks/
     │   ├── 01-…05-*.ipynb                  # corrected versions of the five originals
-    │   └── 06-vessel-dependent-carrying-capacity.ipynb   # new extension model
+    │   ├── 06-vessel-dependent-carrying-capacity.ipynb   # extension model
+    │   ├── 07-gamma-comparison.ipynb       # Γ = 0, 0.5, 1 from the course notes
+    │   ├── 08-grid-refinement.ipynb        # is the grid fine enough?
+    │   ├── 09-physical-units.ipynb         # micrometres and days
+    │   └── 10-no-flux-boundaries.ipynb     # closed edges vs wrap-around
     ├── figures/                            # figures from the notebooks above
+    │   └── upright-notes/                  # upright copies of two sideways note photos
+    ├── tests/                              # automatic tests of angiogenesis.py
+    ├── pytest.ini
     └── scripts/
         └── extract_results.py              # regenerates all gallery images
 ```
@@ -168,6 +184,7 @@ These are photos of the notebooks I worked from during the summer school, includ
 |:--:|:--:|:--:|
 | ![Fisher–Kolmogorov derivation](original/derivations/01-fisher-kolmogorov.jpg) | ![Discretization](original/derivations/03-discretization.jpg) | ![Vessel coupling](original/derivations/05-vessel-coupling.jpg) |
 
+- Project slides: [`original/presentation/CBSS8-project.pdf`](original/presentation/CBSS8-project.pdf) (PDF export of the original `.pptx`)
 - Planning sketch: [`original/planning/code-structure.jpg`](original/planning/code-structure.jpg)
 - Original unedited photos: [`original/derivations/raw/`](original/derivations/raw/)
 
@@ -177,8 +194,10 @@ These are photos of the notebooks I worked from during the summer school, includ
 |:--:|:--:|
 | <img src="original/course-notes/01-day2-tumour-phases-and-taxis.jpg" width="300"><br>1 · Day 2: tumour phases, chemotaxis, haptotaxis, durotaxis | <img src="original/course-notes/02-grid-and-gaussian-initial-condition.jpg" width="300"><br>2 · Grid and Gaussian initial condition |
 | <img src="original/course-notes/03-diffusion-and-fisher-kolmogorov.jpg" width="300"><br>3 · Diffusion and Fisher–Kolmogorov | <img src="original/course-notes/04-finite-difference-update.jpg" width="300"><br>4 · Finite-difference update |
-| <img src="original/course-notes/05-laplacian-explanation.jpg" width="300"><br>5 · What the discrete Laplacian does | <img src="original/course-notes/06-model-overview-and-parameters.jpg" width="300"><br>6 · Overview of models 1–4 and their parameters |
-| <img src="original/course-notes/07-vessel-model-and-gamma.jpg" width="300"><br>7 · Vessel model, β split and the meaning of γ | |
+| <img src="original/course-notes/05-laplacian-explanation.jpg" width="300"><br>5 · What the discrete Laplacian does | <img src="corrected/figures/upright-notes/06-model-overview-and-parameters.jpg" width="300"><br>6 · Overview of models 1–4 and their parameters ([original photo](original/course-notes/06-model-overview-and-parameters.jpg)) |
+| <img src="corrected/figures/upright-notes/07-vessel-model-and-gamma.jpg" width="300"><br>7 · Vessel model, β split and the meaning of γ ([original photo](original/course-notes/07-vessel-model-and-gamma.jpg)) | |
+
+Pages 6 and 7 are shown from upright copies in `corrected/figures/upright-notes/`; the photos in `original/` are unchanged.
 
 </details>
 
@@ -256,7 +275,7 @@ One modelling choice is new: in the growth models, densities below `cutoff = 1e-
 What the corrected models show:
 
 - **With the growth term fixed, tumours saturate fast.** In model 3 the tumour reaches $N_{\max}$ within about 100 steps; in the original its peak density only rose from 0.10 to 0.14 over 2000 steps.
-- **Models 3 and 4 are under-resolved.** The tumour edge is about $\sqrt{D/\alpha_0}$ wide: 0.02 grid cells in model 3 and 0.2 in model 4. When the edge is thinner than a grid cell, how fast the tumour spreads depends on the grid, so use a finer grid for quantitative results.
+- **Models 3 and 4 are under-resolved.** The tumour edge is about $\sqrt{D/\alpha_0}$ wide: 0.02 grid cells in model 3 and 0.2 in model 4. When the edge is thinner than a grid cell, how fast the tumour spreads depends on the grid. [Notebook 08](corrected/notebooks/08-grid-refinement.ipynb) measures this: at $\Delta x = 1$ the front is 4.4× too fast in model 3 and 1.3× in model 4.
 - **In model 5 the vessels barely affect the tumour.** On the right half the vessels reach $V_{\max}$ by about step 500 and raise the growth rate to about 2.73, yet re-running with $\beta = 0$ changes the tumour area by less than 1 %. The front is pushed by the sparse cells at its leading edge, where no vessels have formed yet ($V = 1$, so $(V - 1)^{\Gamma} = 0$), while behind the front the tumour is already at $N_{\max}$, so a higher growth rate has nothing to act on. For the vasculature to matter, it has to act ahead of the front or limit the tumour, for example through a carrying capacity that depends on $V$. The [extension below](#extension-vessels-set-the-carrying-capacity) does exactly that.
 
 ---
@@ -304,7 +323,24 @@ In Travasso et al. (2011, [doi:10.1371/journal.pone.0019989](https://doi.org/10.
 | ![Vessel-dependent carrying capacity](corrected/figures/06-vessel-dependent-carrying-capacity-1.png) |
 | ![Tumour density with and without angiogenesis](corrected/figures/06-vessel-dependent-carrying-capacity-2.png) |
 
-Parameters are in grid units and chosen for illustration, not calibrated to tissue.
+Parameters are in grid units and chosen for illustration, not calibrated to tissue. [Notebook 09](corrected/notebooks/09-physical-units.ipynb) converts them to physical units.
+
+---
+
+## Analyses: Gamma, Grid, Units and Edges
+
+Four notebooks in `corrected/notebooks/` test how far the models can be trusted:
+
+| Notebook | Question | Answer |
+|---|---|---|
+| [07 · Γ comparison](corrected/notebooks/07-gamma-comparison.ipynb) | The course notes try Γ = 0, 0.5 and 1 ("how functional the irrigation is"). What changes? | Only **Γ = 0** lets vessels matter: tumour area is up to 40 % larger by step 300. With Γ = 0.5 or 1 the change is under 1 %, because the boost $(V-1)^{\Gamma}$ is still near zero at the advancing edge. |
+| [08 · Grid refinement](corrected/notebooks/08-grid-refinement.ipynb) | Is $\Delta x = 1$ fine enough? | No, not for small $D$. Fronts are **4.4×** too fast in model 3, **1.3×** in model 4 and **1.1×** in model 5. Theory predicts the error to within 2–3 %. A spacing no larger than the front width $\sqrt{D/\alpha}$ keeps the error near 5 %. |
+| [09 · Physical units](corrected/notebooks/09-physical-units.ipynb) | What are the models in µm and days? | With 10 µm per cell and a 24 h doubling time: grids are 1–2 mm of tissue, growth runs cover 140–290 days, and fronts move 0.6–6 µm/day. Model 06's nutrient reach (80 µm) is about half the ~170 µm measured for oxygen in tumours (Thomlinson & Gray 1955, [doi:10.1038/bjc.1955.55](https://doi.org/10.1038/bjc.1955.55)). |
+| [10 · Closed edges](corrected/notebooks/10-no-flux-boundaries.ipynb) | What if the grid does not wrap around? | With no-flux edges the tumour no longer reappears on the far side. Totals change by about 4 % or less, and model 06's result (0.455 vs 0.27) is unchanged. |
+
+| Γ comparison (07) | Grid refinement (08) |
+|:--:|:--:|
+| ![Gamma comparison](corrected/figures/07-gamma-comparison-2.png) | ![Grid refinement](corrected/figures/08-grid-refinement-1.png) |
 
 ---
 
@@ -335,6 +371,32 @@ To regenerate the gallery images from the notebooks' saved outputs:
 ```bash
 python corrected/scripts/extract_results.py
 ```
+
+---
+
+## Tests
+
+The corrected notebooks share their numerical code through [`corrected/angiogenesis.py`](corrected/angiogenesis.py). Its tests in `corrected/tests/` check that:
+- diffusion conserves the total amount of tumour cells, with both kinds of edges;
+- the Laplacian is exact for quadratic functions;
+- growth matches the exact logistic solution;
+- a tumour front approaches the theoretical speed $2\sqrt{D\alpha}$;
+- no-flux edges do not wrap around;
+- unstable time steps are rejected.
+
+Run them with:
+
+```bash
+python -m pytest corrected
+```
+
+They also run automatically on GitHub after every push (see the badge at the top).
+
+---
+
+## Citation
+
+If you use this work, please cite it with the details in [`CITATION.cff`](CITATION.cff). GitHub's "Cite this repository" button reads the same file.
 
 ---
 

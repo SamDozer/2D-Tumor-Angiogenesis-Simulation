@@ -28,3 +28,6 @@ desktop.ini
 # Figures the original notebooks write into the working folder when run
 matrix_step_*.png
 Vessel_matrix_step_*.png
+
+# Test caches
+.pytest_cache/

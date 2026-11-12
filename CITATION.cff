@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "2D Tumor Angiogenesis Simulation"
+type: software
+authors:
+  - given-names: Hossam
+    family-names: Mahmoud
+repository-code: "https://github.com/SamDozer/2D-Tumor-Angiogenesis-Simulation"
+license: MIT
+abstract: >-
+  Two-dimensional reaction-diffusion models of tumour growth and angiogenesis
+  (Fisher-Kolmogorov diffusion and proliferation coupled to vessel growth),
+  implemented in Python with the finite-difference method. Built at the
+  Computational Biology Summer School in Coimbra (September 2024) under the
+  guidance of Rui Travasso and Matilda Palmeira; the repository keeps the
+  original notebooks alongside corrected and extended versions.
+keywords:
+  - tumor angiogenesis
+  - Fisher-Kolmogorov equation
+  - reaction-diffusion
+  - finite-difference method
+  - computational biology

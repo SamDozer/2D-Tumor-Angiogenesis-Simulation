@@ -4,3 +4,6 @@
 numpy
 matplotlib
 jupyter
+
+# Only needed to run the tests:  python -m pytest corrected
+pytest

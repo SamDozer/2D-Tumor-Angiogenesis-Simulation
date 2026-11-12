@@ -15,11 +15,12 @@ FRAME = {
 # (notebook glob, output folder, mode)
 #   "frame": one image, chosen by FRAME (original notebooks)
 #   "last":  the last image (corrected notebooks draw one summary figure)
-#   "all":   every image, saved as <stem>-1.png, <stem>-2.png, ... (extension notebook)
+#   "all":   every image, saved as <stem>-1.png, <stem>-2.png, ... (notebooks 06-10)
 SOURCES = [
     ("original/notebooks/*.ipynb", "original/figures", "frame"),
     ("corrected/notebooks/0[1-5]-*.ipynb", "corrected/figures", "last"),
-    ("corrected/notebooks/06-*.ipynb", "corrected/figures", "all"),
+    ("corrected/notebooks/0[6-9]-*.ipynb", "corrected/figures", "all"),
+    ("corrected/notebooks/1[0-9]-*.ipynb", "corrected/figures", "all"),
 ]
 
 for pattern, dest, mode in SOURCES:
