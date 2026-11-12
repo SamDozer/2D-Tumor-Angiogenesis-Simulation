@@ -21,6 +21,8 @@ The simulations use Python and Jupyter Notebooks, employing the finite differenc
 - [Results Gallery](#results-gallery)
 - [Mathematical Background](#mathematical-background)
 - [The Models](#the-models)
+- [Corrected Versions](#corrected-versions)
+- [Known Issues in the Original Notebooks](#known-issues-in-the-original-notebooks)
 - [Installation](#installation)
 - [How to Run](#how-to-run)
 - [Acknowledgments](#acknowledgments)
@@ -55,17 +57,19 @@ Each notebook explores a different aspect of tumor angiogenesis:
 ├── LICENSE
 ├── requirements.txt
 ├── .gitignore
-├── notebooks/                          # the five models, in order of increasing complexity
+├── notebooks/                          # the five original models (Coimbra, Sept 2024), unchanged
 │   ├── 01-diffusion-single-region.ipynb
 │   ├── 02-diffusion-three-regions.ipynb
 │   ├── 03-proliferation-small-diffusion.ipynb
 │   ├── 04-diffusion-proliferation.ipynb
-│   └── 05-diffusion-proliferation-irrigation.ipynb
+│   ├── 05-diffusion-proliferation-irrigation.ipynb
+│   └── corrected/                      # corrected, vectorized versions (same file names)
 ├── scripts/
 │   └── extract_results.py              # regenerates the gallery images from notebook outputs
 └── docs/
     ├── notes.docx                      # working notes
     ├── results/                        # exported figures used in the gallery below
+    │   └── corrected/                  # figures from the corrected notebooks
     ├── derivations/                    # handwritten model derivations
     │   └── raw/                        # original unedited photos
     ├── planning/                       # code-structure planning sketch
@@ -76,7 +80,30 @@ Each notebook explores a different aspect of tumor angiogenesis:
 
 ## Results Gallery
 
-A representative frame from each model (regenerate with `python scripts/extract_results.py`):
+Regenerate all gallery images with `python scripts/extract_results.py`.
+
+### Corrected models
+
+These are the models as the equations below describe them (see [Corrected Versions](#corrected-versions)).
+
+| 4 · Diffusion + proliferation: a Fisher–Kolmogorov front |
+|:--:|
+| ![Corrected diffusion + proliferation](docs/results/corrected/04-diffusion-proliferation.png) |
+| **5 · Tumour (top) and vasculature (bottom)** |
+| ![Corrected irrigation model](docs/results/corrected/05-diffusion-proliferation-irrigation.png) |
+
+<details>
+<summary><b>Corrected models 1–3</b></summary>
+
+![Corrected single-region diffusion](docs/results/corrected/01-diffusion-single-region.png)
+![Corrected three-region diffusion](docs/results/corrected/02-diffusion-three-regions.png)
+![Corrected proliferation with small diffusion](docs/results/corrected/03-proliferation-small-diffusion.png)
+
+</details>
+
+### Original notebooks
+
+A representative frame from each original notebook. Models 1, 3, 4 and 5 are affected by the issues listed under [Known Issues](#known-issues-in-the-original-notebooks).
 
 |  |  |
 |:--:|:--:|
@@ -101,9 +128,17 @@ where $D$ is the diffusion coefficient, $\alpha$ the proliferation rate, and $N_
 
 $$\nabla^2 n_{i,j} \approx \frac{n_{i+1,j} + n_{i-1,j} + n_{i,j+1} + n_{i,j-1} - 4\,n_{i,j}}{(\Delta x)^2}$$
 
-The equation is then stepped forward in time explicitly, with no-flux behavior enforced at the grid boundaries.
+The equation is stepped forward in time with the explicit (forward Euler) method, which is stable only if $D\,\Delta t/\Delta x^2 \le 1/4$. The boundaries are **periodic**: the grid wraps around, so a tumour that reaches one edge reappears on the opposite edge.
 
-**Vessel coupling (irrigation).** In the final model, the vessel density $v$ evolves by a separate growth equation driven by the local tumor cell density and the existing vessel density, regulated by a maximum vessel capacity $V_{\max}$ and a growth-rate ($\beta$) matrix. The tumor and vasculature are updated together each time step so the vascular network adapts to the tumor's nutrient demand.
+**Vessel coupling (irrigation).** In the final model the vessel density $V$ raises the local proliferation rate, and vessels grow where there are tumour cells:
+
+$$\frac{\partial n}{\partial t} = D\,\nabla^2 n + \big[\alpha_0 + \alpha_1\,(V^{\Gamma} - 1)\big]\, n\left(1 - \frac{n}{N_{\max}}\right)$$
+
+$$\frac{\partial V}{\partial t} = \beta(x)\, n \left(1 - \frac{V}{V_{\max}}\right)$$
+
+$\beta$ is $0.001$ on the left half of the grid and $0.1$ on the right half, which is why the vessel-density images split down the middle.
+
+> The original notebooks do not implement these equations exactly; see [Known Issues](#known-issues-in-the-original-notebooks). The [corrected versions](#corrected-versions) do.
 
 <details>
 <summary><b>📄 Original handwritten derivations &amp; planning notes</b></summary>
@@ -124,6 +159,8 @@ These are photos of the notebook I worked from during the summer school, include
 ---
 
 ## The Models
+
+These are the five original notebooks. Parameters are listed as they are set in the code; because of the [known issues](#known-issues-in-the-original-notebooks), the effective rates in models 1, 3, 4 and 5 differ from these values.
 
 ### 1 · [`notebooks/01-diffusion-single-region.ipynb`](notebooks/01-diffusion-single-region.ipynb)
 
@@ -177,6 +214,43 @@ These are photos of the notebook I worked from during the summer school, include
 
 ---
 
+## Corrected Versions
+
+[`notebooks/corrected/`](notebooks/corrected/) contains a corrected version of each notebook, with the same file names. The originals are kept unchanged as the record of the summer-school work.
+
+Each corrected notebook:
+
+- implements the equations from [Mathematical Background](#mathematical-background) exactly, with the same parameters, grid and periodic boundaries as the original;
+- runs top to bottom in a fresh kernel and uses NumPy array operations instead of nested Python loops (seconds instead of minutes);
+- explains, in a "What changed from the original" note, every difference from the original;
+- checks numerical stability, and for the diffusion-only models checks that the total amount of tumour cells is conserved.
+
+One modelling choice is new: in the growth models, densities below `cutoff = 1e-3` in the initial Gaussians are set to zero. A Gaussian never reaches exactly zero, and with logistic growth its 1e-30 tails grow exponentially, so the whole grid fills up within a few hundred steps regardless of where the tumour started.
+
+What the corrected models show:
+
+- **With the growth term fixed, tumours saturate fast.** In model 3 the tumour reaches $N_{\max}$ within about 100 steps; in the original its peak density only rose from 0.10 to 0.14 over 2000 steps.
+- **Models 3 and 4 are under-resolved.** The tumour edge is about $\sqrt{D/\alpha_0}$ wide: 0.02 grid cells in model 3 and 0.2 in model 4. When the edge is thinner than a grid cell, how fast the tumour spreads depends on the grid, so use a finer grid for quantitative results.
+- **In model 5 the vessels barely affect the tumour.** Re-running with $\beta = 0$ changes the tumour area by less than 0.1 %. The front is pushed by the sparse cells at its leading edge, where no vessels have formed yet, while behind the front the tumour is already at $N_{\max}$, so a higher growth rate has nothing to act on. For the vasculature to matter, it has to act ahead of the front or limit the tumour, for example through a carrying capacity that depends on $V$.
+
+---
+
+## Known Issues in the Original Notebooks
+
+| Notebook | Issue | Effect |
+|---|---|---|
+| 01 | Diffusion term uses `D * (delta_t/delta_x)` inside an outer `delta_t` | Effective $D = 0.1$ instead of 1 |
+| 01 | Contains a logistic growth term | Not a diffusion-only model, as described |
+| 02 | Loop uses `num_step` and `matrix_next`, which the notebook never defines | *Restart & Run All* fails with a `NameError`; it only ran with variables left over from another notebook |
+| 02 | `range(num_step)` stops at 1999 | The step-2000 snapshot is never drawn |
+| 03, 04 | Growth term is inside the `(D / delta_x**2) * (...)` bracket | Growth rate multiplied by $D$: 1000× too slow in 03, 20× in 04 |
+| 05 | Same bracket issue, and `(1 - n/N_Max)` also multiplies the diffusion term | Growth multiplied by $D = 0.2$; diffusion switches off where the tumour is dense |
+| 02–05 | All save figures as `matrix_step_{time}.png` in the working folder | Notebooks overwrite each other's images (these files are git-ignored) |
+
+The diagnosis was checked by re-implementing notebook 03's update line: it reproduces every maximum density the notebook printed, from 0.0991 to 0.1384.
+
+---
+
 ## Installation
 
 ```bash
@@ -197,7 +271,7 @@ Launch Jupyter and open any notebook in the `notebooks/` folder:
 jupyter notebook
 ```
 
-Run the cells top to bottom (**Kernel → Restart & Run All**). Each notebook is self-contained and produces its visualizations inline.
+Run the cells top to bottom (**Kernel → Restart & Run All**). The corrected notebooks in `notebooks/corrected/` are self-contained and run in seconds. The originals are slow (nested Python loops), and the original notebook 02 only runs after another notebook has defined `num_step` and `matrix_next` (see [Known Issues](#known-issues-in-the-original-notebooks)).
 
 To regenerate the images in `docs/results/` from the notebooks' saved outputs:
 
